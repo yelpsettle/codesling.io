@@ -66,10 +66,12 @@ class Sling extends Component {
     this.setEditorSize();
   }
 
+  
+
   render() {
     return (
       <div className="sling-container">
-        <EditorHeader />
+        <EditorHeader openWindow={this.props.openWindow}/>
         <div className="code-editor-container">
           <CodeMirror
             editorDidMount={this.initializeEditor}
@@ -93,6 +95,9 @@ class Sling extends Component {
           <StdOut 
             text={this.state.stdout}
           />
+        </div>
+        <div>
+          <video></video>
         </div>
       </div>
     );

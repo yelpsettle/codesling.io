@@ -1,11 +1,9 @@
 import React from 'react';
 
-const EditorNavbar = () => (
+const EditorNavbar = (props) => (
   <nav className="editor-navbar">
     <ul>
-      <li>Item 1</li>
-      <li>Item 2</li>
-      <li>Item 3</li>
+      <button onClick={props.openWindow}>Start Video Chat</button>
     </ul>
   </nav>
 );
