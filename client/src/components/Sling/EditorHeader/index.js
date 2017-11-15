@@ -5,13 +5,13 @@ import EditorNavbar from './EditorNavbar';
 
 import './EditorHeader.css';
 
-const EditorHeader = () => (
+const EditorHeader = (props) => (
   <div className="editor-header">
     <div className="logo-container">
       <Logo />
     </div>
     <div className="navbar-container">
-      <EditorNavbar />
+      <EditorNavbar openWindow={props.openWindow}/>
     </div>
   </div>
 );

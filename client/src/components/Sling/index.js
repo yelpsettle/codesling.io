@@ -22,9 +22,13 @@ class ProtectedSling extends Component {
     return !!sling;
   }
 
+  openWindow = () => {
+    window.open();
+  }
+
   render() {
     return (
-      <Sling slingId={this.props.match.params.slingId} />
+      <Sling slingId={this.props.match.params.slingId} openWindow={this.openWindow}/>
     );
   }
 }
