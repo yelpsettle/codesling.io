@@ -2,6 +2,7 @@ import React from 'react';
 
 import Input from '../../globals/forms/Input';
 import Button from '../../globals/Button/';
+import jwtDecode from 'jwt-decode';
 
 import './Chat.css';
 
@@ -16,33 +17,44 @@ class Chat extends React.Component {
         message: ''
     }
 
+    componentDidMount()  {
+    this.props.socket.on('server.message', 
+        (data) =>
+
+        this.setState({
+                messages: [...this.state.messages,data],
+                username: data.username
+            })
+        )
+    }
+
     handleChange = (event) => {
         const { name } = event.target;
         this.setState({ [name]: event.target.value });
     }
 
-    handleMessageSubmit = async (e) => {
+    handleMessageSubmit = (e) => {
         e.preventDefault();
-        this.props.socket.emit('client.message', {message: this.state.message})
-        this.props.socket.on('server.message', (data) => this.state.messages.push(data))
+        this.props.socket.emit('client.message', {message: this.state.message, username: jwtDecode(localStorage.token).username})
     }
 
     render(){
         return (
             <div className="chat-container">
-                {console.log('this is the message page')}
-                <ul id="messages" className="list-group">
+                <div id="messages" className="list-group">
                 This is where the messages go
-                </ul>
+                {this.state.messages.map((item) => (
+                    <div>{item.username +': ' + item.message}</div>)
+                )}
+                </div>
                 <div className="chat-messages">
              
                 </div>
                 <div className="chat-input">
-                <form className="chat-form" onSubmit= {this.handleMessageSubmit }  >
+                <form className="chat-form" onSubmit={this.handleMessageSubmit} >
                 <Input
                 type="text"
                 name="message"
-                // value={this.state.value}
                 placeholder="message"
                 onChange={this.handleChange}
                 />
@@ -50,8 +62,6 @@ class Chat extends React.Component {
                 backgroundColor="red"
                 color="white"
                 text="Send"
-                onClick={this.handleMessageSubmit}
-        
                  />
             </form>
                 </div>
