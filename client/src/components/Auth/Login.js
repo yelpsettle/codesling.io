@@ -30,7 +30,6 @@ class Login extends Component {
     });
     const { accessToken } = data;
     localStorage.setItem('token', accessToken);
-    console.log('localStotage.token',localStorage.token)
     this.props.history.push('/');
   }
 
