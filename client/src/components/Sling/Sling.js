@@ -6,7 +6,7 @@ import { throttle } from 'lodash';
 import Button from '../globals/Button';
 import StdOut from './StdOut';
 import EditorHeader from './EditorHeader';
-import Chat from './Chat';
+import Chat from './Chat/index.js';
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -17,7 +17,11 @@ class Sling extends Component {
   state = {
     text: '',
     stdout: '',
-    message: ''
+    socket: io(process.env.REACT_APP_SOCKET_SERVER_URL, {
+      query: {  
+        roomId: this.props.slingId,
+      }
+    })
   }
 
   runCode = () => {
@@ -25,32 +29,19 @@ class Sling extends Component {
   }
       
   componentDidMount() {
-    this.socket = io(process.env.REACT_APP_SOCKET_SERVER_URL, {
-      query: {  
-        roomId: this.props.slingId,
-      }
+    this.state.socket.on('connect', () => {
+      this.state.socket.emit('client.ready');
     });
 
-    // io.on('connection', function(socket){
-    //   console.log('a user connected');
-    //   socket.on('disconnect', function(){
-    //     console.log('user disconnected');
-    //   });
-    // });
-
-    this.socket.on('connect', () => {
-      this.socket.emit('client.ready');
-    });
-
-    this.socket.on('server.initialState', ({ id, text }) => {
+    this.state.socket.on('server.initialState', ({ id, text }) => {
       this.setState({ id, text });
     });
 
-    this.socket.on('server.changed', ({ text }) => {
+    this.state.socket.on('server.changed', ({ text }) => {
       this.setState({ text });
     });
 
-    this.socket.on('server.run', ({ stdout }) => {
+    this.state.socket.on('server.run', ({ stdout }) => {
       this.setState({ stdout });
     });
 
@@ -62,7 +53,7 @@ class Sling extends Component {
   }
 
   handleChange = throttle((editor, metadata, value) => {
-    this.socket.emit('client.update', { text: value });
+    this.state.socket.emit('client.update', { text: value });
   }, 250)
 
   setEditorSize = throttle(() => {
@@ -106,7 +97,7 @@ class Sling extends Component {
           />
         </div>
         <div className="chat-container">
-            <Chat slingId = {this.props.slingId} chatClick = {this.chatClick} message = {this.state.message} socket = {this.socket}/>
+            <Chat socket = {this.state.socket}/>
         </div>
 
         <div>
