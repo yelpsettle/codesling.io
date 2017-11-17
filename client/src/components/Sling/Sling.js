@@ -6,7 +6,8 @@ import { throttle } from 'lodash';
 import Button from '../globals/Button';
 import StdOut from './StdOut';
 import EditorHeader from './EditorHeader';
-import Chat from './Chat/index.js';
+import Chat from './Chat';
+import Video from './VideoChat';
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -25,7 +26,7 @@ class Sling extends Component {
   }
 
   runCode = () => {
-    this.socket.emit('client.run');
+    this.state.socket.emit('client.run');
   }
       
   componentDidMount() {
@@ -100,8 +101,8 @@ class Sling extends Component {
             <Chat socket = {this.state.socket}/>
         </div>
 
-        <div>
-          <video></video>
+        <div className="video-container">
+          <Video slingId={this.props.slingId} socket={this.state.socket} />
         </div>
 
 
