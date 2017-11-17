@@ -35,3 +35,4 @@ export const serverMessage = ({ io, room }, message) => {
     .in(room.get('id'))
     .emit('server.message', message);
 };
+

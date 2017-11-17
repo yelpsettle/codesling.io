@@ -6,6 +6,7 @@ import { throttle } from 'lodash';
 import Button from '../globals/Button';
 import StdOut from './StdOut';
 import EditorHeader from './EditorHeader';
+import Chat from './Chat';
 
 import 'codemirror/mode/javascript/javascript.js';
 import 'codemirror/lib/codemirror.css';
@@ -15,19 +16,27 @@ import './Sling.css';
 class Sling extends Component {
   state = {
     text: '',
-    stdout: ''
+    stdout: '',
+    message: ''
   }
 
   runCode = () => {
     this.socket.emit('client.run');
   }
-
+      
   componentDidMount() {
     this.socket = io(process.env.REACT_APP_SOCKET_SERVER_URL, {
-      query: {
+      query: {  
         roomId: this.props.slingId,
       }
     });
+
+    // io.on('connection', function(socket){
+    //   console.log('a user connected');
+    //   socket.on('disconnect', function(){
+    //     console.log('user disconnected');
+    //   });
+    // });
 
     this.socket.on('connect', () => {
       this.socket.emit('client.ready');
@@ -66,7 +75,7 @@ class Sling extends Component {
     this.setEditorSize();
   }
 
-  
+
 
   render() {
     return (
@@ -96,9 +105,15 @@ class Sling extends Component {
             text={this.state.stdout}
           />
         </div>
+        <div className="chat-container">
+            <Chat slingId = {this.props.slingId} chatClick = {this.chatClick} message = {this.state.message} socket = {this.socket}/>
+        </div>
+
         <div>
           <video></video>
         </div>
+
+
       </div>
     );
   }

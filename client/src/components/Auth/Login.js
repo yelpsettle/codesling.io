@@ -16,6 +16,7 @@ class Login extends Component {
   handleChange = (event) => {
     const { name } = event.target;
     this.setState({ [name]: event.target.value });
+    console.log(event.target.value)
   }
 
   handleLoginSubmit = async (e) => {
@@ -65,7 +66,7 @@ class Login extends Component {
             backgroundColor="red"
             color="white"
             text="Log In"
-            onClick={this.loginClick}
+            onClick={this.handleLoginSubmit}
           />
         </form>
       </div>
