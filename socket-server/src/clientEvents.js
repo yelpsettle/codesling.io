@@ -7,6 +7,7 @@ import {
   serverLeave,
   serverRun,
   serverMessage,
+  serverVideo
 } from './serverEvents';
 
 /**
@@ -56,12 +57,18 @@ const clientMessage = ({ io, room }, payload) => {
   serverMessage({ io, room }, payload);
 };
 
+const clientVideo = ({io, client, room}, id) => {
+  log('client video heard', id);
+  serverVideo({ io, client, room }, id);
+}
+
 const clientEmitters = {
   'client.ready': clientReady,
   'client.update': clientUpdate,
   'client.disconnect': clientDisconnect,
   'client.run': clientRun,
   'client.message': clientMessage,
+  'client.video': clientVideo,
 };
 
 export default clientEmitters;

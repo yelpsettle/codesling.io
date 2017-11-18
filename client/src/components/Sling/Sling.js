@@ -98,11 +98,11 @@ class Sling extends Component {
           />
         </div>
         <div className="chat-container">
-            <Chat socket = {this.state.socket}/>
+            <Chat socket = {this.state.socket} />
         </div>
 
         <div className="video-container">
-          <Video slingId={this.props.slingId} socket={this.state.socket} />
+          <Video socket = {this.state.socket} />
         </div>
 
 
