@@ -46,28 +46,26 @@ class Chat extends React.Component {
         return (
             <div className="chat-container">
                 <div id="messages" className="messages-container">
-                
-                {this.state.messages.map((item) => (
-                    <div>{item.username +': ' + item.message}</div>)
-                )}
-                </div>
-                <div className="chat-messages">
-             
+                    {this.state.messages.map((item) => (
+                        <div>{item.username +': ' + item.message}</div>)
+                    )}
+                    </div>
+                <div className="chat-messages"> 
                 </div>
                 <div className="chat-input">
-                <form className="chat-form" onSubmit={this.handleMessageSubmit} >
-                <Input
-                type="text"
-                name="message"
-                placeholder="message"
-                onChange={this.handleChange}
-                />
-                <Button
-                backgroundColor="red"
-                color="white"
-                text="Send"
-                 />
-            </form>
+                    <form className="chat-form" onSubmit={this.handleMessageSubmit} >
+                        <Input
+                        type="text"
+                        name="message"
+                        placeholder="message"
+                        onChange={this.handleChange}
+                        />
+                        <Button
+                        backgroundColor="red"
+                        color="white"
+                        text="Send"
+                        />
+                    </form>
                 </div>
             </div>
         )
