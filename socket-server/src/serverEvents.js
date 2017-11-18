@@ -32,7 +32,13 @@ export const serverRun = ({ io, room }, stdout) => {
 
 export const serverMessage = ({ io, room }, message) => {
   io
-    .in(room.get('id'))
+    .to(room.get('id'))
     .emit('server.message', message);
 };
 
+export const serverVideo = ({ io, client, room }, data) => {
+  console.log('in serverEvent socket', data)
+  client
+    .broadcast.to(room.get('id'))
+    .emit('server.video', data)
+ };
