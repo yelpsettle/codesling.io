@@ -74,11 +74,6 @@ class VideoChat extends React.Component {
   }
 
   render() {
-    // let conn = this.peer.connect(this.state.otherPeerId);
-    // console.log(conn)
-    // conn.on('open', () => {
-    //   conn.send('hi!');
-    // });
 
     this.peer.on('connection', (conn) => {
       conn.on('data', (data) => {
@@ -105,16 +100,18 @@ class VideoChat extends React.Component {
       <div>
         <video id="yourVideo" autoPlay muted ></video>
         <video id="otherVideo" autoPlay></video>
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Start" 
-          onClick={this.showMyFace} />
-        <Button
-          backgroundColor="red"
-          color="white"
-          text="Call" 
-          onClick={this.callPeer} />
+        <div className="form-inline">
+          <Button
+            backgroundColor="red"
+            color="white"
+            text="Start" 
+            onClick={this.showMyFace} />
+          <Button
+            backgroundColor="red"
+            color="white"
+            text="Call" 
+            onClick={this.callPeer} />
+        </div>
       </div>
     )
   }
