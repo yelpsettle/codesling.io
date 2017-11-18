@@ -22,6 +22,7 @@ class ProtectedSling extends Component {
     return !!sling;
   }
 
+<<<<<<< HEAD
   openWindow = () => {
     'use strict';
     
@@ -53,6 +54,8 @@ class ProtectedSling extends Component {
     );
   }
 
+=======
+>>>>>>> [fix]
   render() {
     return (
       <Sling slingId={this.props.match.params.slingId} openWindow={this.openWindow}/>

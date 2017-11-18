@@ -39,7 +39,7 @@ class VideoChat extends React.Component {
       });
     });
 
-    this.peer.on('call', this.onReceiveCall.bind(this));
+    // this.peer.on('call', this.onReceiveCall.bind(this));
   }
   
   callPeer = () => {
@@ -55,6 +55,20 @@ class VideoChat extends React.Component {
     // });
   }
 
+  receiveCall = call => {
+    let otherVideo = document.getElementById("otherVideo");
+    this.peer.on('call', function(call) {
+      navigator.mediaDevices.getUserMedia({video: true, audio: true}, function(stream) {
+        call.answer(stream); // Answer the call with an A/V stream.
+        call.on('stream', function(remoteStream) {
+          // Show stream in some video/canvas element.
+          otherVideo.srcObject = remoteStream
+        });
+      }, function(err) {
+        console.log('Failed to get local stream' ,err);
+      });
+    });
+  }
   // onMessage = message => {
   //   if (message.type === 'offer') {
   //       // set remote description and answer
